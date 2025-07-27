@@ -1,0 +1,15 @@
+<script setup lang="ts">
+import { useHighlighter } from '~/composables/useShiki'
+import usingComposableSample from '~/sample/usingComposable.sample?raw'
+
+const composableCodeRaw = ref(usingComposableSample)
+
+const composableCode = computed(() => useHighlighter(composableCodeRaw.value, 'vue').value)
+</script>
+
+<template>
+  <div>
+    <textarea v-model="composableCode" name="jsCodeRaw" p="6" rounded="lg" border="1px solid #aaaaaa70" />
+    <span overflow="auto" border="1px solid #aaaaaa70" rounded="lg" p="6" v-html="jsCode" />
+  </div>
+</template>

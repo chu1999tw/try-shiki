@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { Shiki, useHighlighter } from '~/composables/useShiki'
-import vueSample from '~/sample/vue.sample?raw'
+import usingComponentSample from '~/sample/usingComponent.sample?raw'
+import usingComposableSample from '~/sample/usingComposable.sample?raw'
 
-const code = ref(vueSample)
+const componentCodeRaw = ref(usingComponentSample)
 
-const jsCodeRaw = ref('const a = 1;')
+const composableCodeRaw = ref(usingComposableSample)
 
-const jsCode = computed(() => useHighlighter(jsCodeRaw.value, 'javascript').value)
+const composableCode = computed(() => useHighlighter(composableCodeRaw.value, 'vue').value)
 </script>
 
 <template>
   <div grid="~" gap="6">
-    <!-- using composable -->
-    <textarea v-model="jsCodeRaw" name="jsCodeRaw" p="6" rounded="lg" border="1px solid #aaaaaa70" />
-    <span border="1px solid #aaaaaa70" rounded="lg" p="6" v-html="jsCode" />
+    <p>Using Composable:</p>
+    <textarea v-model="composableCodeRaw" name="jsCodeRaw" p="6" rounded="lg" border="1px solid #aaaaaa70" />
+    <span overflow="auto" border="1px solid #aaaaaa70" rounded="lg" p="6" v-html="composableCode" />
 
-    <!-- using component  -->
-    <textarea v-model="code" name="script" p="6" rounded="lg" border="1px solid #aaaaaa70" />
-    <Shiki lang="vue" :code="code" overflow="auto" />
+    <p>Using Component:</p>
+    <textarea v-model="componentCodeRaw" name="script" p="6" rounded="lg" border="1px solid #aaaaaa70" />
+    <Shiki lang="vue" :code="componentCodeRaw" overflow="auto" />
   </div>
 </template>
 
