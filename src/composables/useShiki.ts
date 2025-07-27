@@ -87,7 +87,7 @@ export const Shiki = defineComponent(
       return () => h('span', {
         innerHTML: highlighted.value,
         border: '1px solid #aaaaaa70',
-        rounded: 'xl',
+        rounded: 'lg',
         p: 6,
       })
     },
