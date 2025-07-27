@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import { Shiki } from '~/composables/useShiki'
+import { Shiki, useHighlighter } from '~/composables/useShiki'
 import vueSample from '~/sample/vue.sample?raw'
 
 const code = ref(vueSample)
+
+const jsCodeRaw = ref('const a = 1;')
+
+const jsCode = computed(() => useHighlighter(jsCodeRaw.value, 'javascript').value)
 </script>
 
 <template>
   <div grid="~" gap="6">
-    <textarea v-model="code" name="script" p="8" rounded="xl" border="1px solid #cccccc" />
+    <!-- using composable -->
+    <textarea v-model="jsCodeRaw" name="script" p="8" rounded="xl" border="1px solid #aaaaaa70" />
+    <span border="1px solid #aaaaaa70" rounded="xl" p="6" v-html="jsCode" />
+
+    <!-- using component  -->
+    <textarea v-model="code" name="script" p="8" rounded="xl" border="1px solid #aaaaaa70" />
     <Shiki lang="vue" :code="code" overflow="auto" />
   </div>
 </template>

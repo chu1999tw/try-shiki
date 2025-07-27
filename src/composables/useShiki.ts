@@ -45,12 +45,12 @@ function sanitizeHtml(input: string): string {
   return output
 }
 
-export function useHighlighter(code: Ref<string>, lang: Lang = 'javascript') {
+export function useHighlighter(code: string, lang: Lang = 'javascript') {
   return computed(() => {
     if (!shiki.value)
-      return sanitizeHtml(code.value)
+      return sanitizeHtml(code)
 
-    return shiki.value?.codeToHtml(code.value, {
+    return shiki.value?.codeToHtml(code, {
       lang,
       theme: isDark.value ? 'vitesse-dark' : 'vitesse-light',
       transformers: [
@@ -76,11 +76,13 @@ export const Shiki = defineComponent(
       },
     },
     setup(props: {
-      code: Ref<string>
+      code: string
       lang: Lang
     }) {
-      const { code, lang } = toRefs(props)
-      const highlighted = useHighlighter(code, lang.value as Lang)
+      const highlighted = computed(() => {
+        const highlightedCode = useHighlighter(props.code, props.lang)
+        return highlightedCode.value
+      })
 
       return () => h('span', {
         innerHTML: highlighted.value,
